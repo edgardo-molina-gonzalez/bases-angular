@@ -1,5 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { HeroService } from '../../services/hero.service';
+import { Character } from '../../interfaces/character.interface';
 
 @Component({
   selector: 'app-main-page',
@@ -7,5 +8,17 @@ import { HeroService } from '../../services/hero.service';
   styleUrls: ['./main-page.component.css'],
 })
 export class MainPageComponent {
-  constructor(public dbzService: HeroService) {}
+  constructor(private dbzService: HeroService) {}
+
+  get characters(): Character[] {
+    return [...this.dbzService.characters];
+  }
+
+  onDeleteCharacter(id: string) {
+    this.dbzService.deleteCharacterById(id);
+  }
+
+  onNewCharacter(character: Character) {
+    this.dbzService.addCharacter(character);
+  }
 }
